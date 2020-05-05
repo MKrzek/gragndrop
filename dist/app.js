@@ -47,14 +47,19 @@ class Component {
         this.hostElement.insertAdjacentElement(insertAtStart ? "afterbegin" : "beforeend", this.element);
     }
 }
-class ProjectState {
+class State {
     constructor() {
-        this.projects = [];
         this.listeners = [];
     }
     addListener(listenerFn) {
         console.log('listenderfn', listenerFn, this.listeners);
         this.listeners.push(listenerFn);
+    }
+}
+class ProjectState extends State {
+    constructor() {
+        super();
+        this.projects = [];
     }
     static getInstance() {
         if (this.instance) {

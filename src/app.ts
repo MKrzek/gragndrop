@@ -25,7 +25,7 @@ class Project {
         public status: ProjectStatus) { }
 }
 
-type Listener = (items: Project[]) => void
+type Listener<T> = (items: T[]) => void
 //Component Base Class
 abstract class Component<T extends HTMLElement, U extends HTMLElement>{
     templateElement: HTMLTemplateElement;
@@ -58,17 +58,22 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement>{
 
 
 //Project State
-
-class ProjectState {
-    private projects: Project[] = [];
-    private static instance: ProjectState;
-    private listeners: Listener[] = []
-    private constructor() { }
-
-    addListener(listenerFn: Listener) {
+class State<T> {
+    protected listeners: Listener<T>[] = []
+    addListener(listenerFn: Listener<T>) {
         console.log('listenderfn', listenerFn, this.listeners)
         this.listeners.push(listenerFn)
     }
+}
+class ProjectState extends State<Project> {
+    private projects: Project[] = [];
+    private static instance: ProjectState;
+
+    private constructor() {
+        super()
+     }
+
+
 
     static getInstance() {
         if (this.instance) {
